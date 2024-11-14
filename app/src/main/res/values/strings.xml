@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NotificationTestApplication</string>
+    <string name="fcm_dvc_id">Your Device ID (FCM Token)</string>
+    <string name="copy_cc">Copy to Clipboard</string>
+</resources>
