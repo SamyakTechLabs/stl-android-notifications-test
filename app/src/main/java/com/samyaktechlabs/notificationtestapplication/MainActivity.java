@@ -2,6 +2,7 @@ package com.samyaktechlabs.notificationtestapplication;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         tokenEditText = findViewById(R.id.tokenEditText);
         Button copyButton = findViewById(R.id.copyButton);
 
+        // Set contrasting colors for light and dark theme
+        setEditTextColors();
         // Fetch the token
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -68,6 +71,19 @@ public class MainActivity extends AppCompatActivity {
             clipboard.setText(tokenEditText.getText().toString());
             Toast.makeText(MainActivity.this, "Token copied to clipboard", Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private void setEditTextColors() {
+        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+            // Dark theme: light background with dark text
+            tokenEditText.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
+            tokenEditText.setTextColor(ContextCompat.getColor(this, android.R.color.black));
+        } else {
+            // Light theme: dark background with light text
+            tokenEditText.setBackgroundColor(ContextCompat.getColor(this, android.R.color.black));
+            tokenEditText.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+        }
     }
 
     private void requestNotificationPermission() {
